@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical NLP Pipeline with Bio-ClinicalBERT</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Enhanced Plotly loading with error handling -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.26.0/plotly.min.js" 
+            onerror="console.error('❌ Failed to load Plotly.js from CDN')"
+            onload="console.log('✅ Plotly.js loaded successfully')"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Spotlight For Yukon Health</h1>
+            <p>Advanced medical text processing for CFA Prediction</p>
+        </header>
+
+        <!-- Input Section -->
+        <section class="input-section">
+            <div class="form-group">
+                <label for="soapNotes">SOAP Notes:</label>
+                <textarea id="soapNotes" placeholder="Enter SOAP notes here..." rows="12"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="location">Location (Optional):</label>
+                <input type="text" id="location" placeholder="e.g., Emergency Department, ICU">
+            </div>
+            
+            <button id="startPipeline" class="button primary-button">
+                Start Processing
+            </button>
+        </section>
+
+        <!-- Pipeline Status -->
+        <section id="pipelineStatus" class="status-section hidden">
+            <h3>Processing Status</h3>
+            <div class="progress-bar">
+                <div id="progressFill" class="progress-fill"></div>
+            </div>
+            <p id="statusText">Initializing...</p>
+        </section>
+
+        <!-- Output Section -->
+        <section id="outputSection" class="output-section hidden">
+            <h2>Processing Results</h2>
+            
+            <!-- Step 1: De-identification -->
+            <div class="output-step">
+                <button id="displayDeidentifiedNotes" class="button step-button hidden">
+                    Display De-identified Notes
+                </button>
+                <div id="deidentifiedOutput" class="output-content hidden"></div>
+            </div>
+
+            <!-- Step 2: Cleaning -->
+            <div class="output-step">
+                <button id="displayCleanedNotes" class="button step-button hidden">
+                    Display Cleaned Notes
+                </button>
+                <div id="cleanedOutput" class="output-content hidden"></div>
+            </div>
+
+            <!-- Step 3: Term Extraction -->
+            <div class="output-step">
+                <button id="displayExtractedTerms" class="button step-button hidden">
+                    Display Extracted Terms
+                </button>
+                <div id="termsOutput" class="output-content hidden"></div>
+            </div>
+
+            <!-- Step 4: CFA Method Selection -->
+            <div id="cfaMethodSection" class="cfa-method-section hidden">
+                <h3>Choose CFA Prediction Method</h3>
+                <div class="method-selection">
+                    <button id="llmCfaBtn" class="method-button">
+                        <div class="method-icon"></div>
+                        <div class="method-info">
+                            <h4>LLM Approach</h4>
+                            <p>Generate diagnoses first, then predict CFAs</p>
+                        </div>
+                    </button>
+                    
+                    <button id="bioClinicalCfaBtn" class="method-button">
+                        <div class="method-icon"></div>
+                        <div class="method-info">
+                            <h4>Bio-ClinicalBERT</h4>
+                            <p>Direct similarity-based CFA prediction</p>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- LLM CFA Section -->
+            <div id="llmCfaSection" class="cfa-section hidden">
+                <h3>🤖 LLM-Based CFA Prediction</h3>
+                
+                <!-- LLM Step 1: Diagnosis Prediction -->
+                <div class="cfa-step">
+                    <button id="predictDiagnosisBtn" class="button cfa-step-button" disabled>
+                        🩺 Predict Diagnoses
+                    </button>
+                    <div id="llmDiagnosisOutput" class="output-content hidden"></div>
+                </div>
+
+                <!-- LLM Step 2: CFA Prediction -->
+                <div class="cfa-step">
+                    <button id="predictLlmCfaBtn" class="button cfa-step-button" disabled>
+                        🏥 Predict CFAs from Diagnoses
+                    </button>
+                    <div id="llmCfaOutput" class="output-content hidden"></div>
+                </div>
+            </div>
+
+            <!-- Bio-ClinicalBERT CFA Section -->
+            <div id="bioClinicalCfaSection" class="cfa-section hidden">
+                <h3>Bio-ClinicalBERT CFA Prediction</h3>
+                
+                <!-- Bio Step 1: Visualization -->
+                <div class="cfa-step">
+                    <button id="displayVisualizationBtn" class="button cfa-step-button" disabled>
+                        Display 2D Visualization
+                    </button>
+                    <div id="visualizationOutput" class="output-content hidden"></div>
+                </div>
+
+                <!-- Bio Step 2: CFA Prediction -->
+                <div class="cfa-step">
+                    <button id="predictBioCfaBtn" class="button cfa-step-button" disabled>
+                        Predict CFAs with Bio-ClinicalBERT
+                    </button>
+                    <div id="bioCfaOutput" class="output-content hidden"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+    
+    <!-- Simple debug check -->
+    <script>
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                if (typeof Plotly !== 'undefined') {
+                    console.log('✅ Plotly.js ready, version:', Plotly.version);
+                } else {
+                    console.error('❌ Plotly.js not available after page load');
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
