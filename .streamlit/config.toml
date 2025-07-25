@@ -1,0 +1,54 @@
+[global]
+# Development mode
+developmentMode = false
+
+# Disable usage stats
+gatherUsageStats = false
+
+# Show error details
+showErrorDetails = true
+
+[server]
+# Server settings
+headless = true
+enableCORS = false
+enableXsrfProtection = true
+
+# Port configuration (Streamlit Cloud will override this)
+port = 8501
+
+# Max upload size (200MB for large SOAP notes)
+maxUploadSize = 200
+
+# Enable websocket compression
+enableWebsocketCompression = true
+
+[browser]
+# Disable automatic browser opening
+gatherUsageStats = false
+serverAddress = "0.0.0.0"
+
+[theme]
+# App theme
+primaryColor = "#FF6B6B"
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#F0F2F6"
+textColor = "#262730"
+font = "sans serif"
+
+[client]
+# Client settings
+caching = true
+displayEnabled = true
+showErrorDetails = true
+
+[runner]
+# Runner settings
+magicEnabled = true
+installTracer = false
+fixMatplotlib = true
+
+[logger]
+# Logging settings
+level = "info"
+messageFormat = "%(asctime)s %(message)s"
